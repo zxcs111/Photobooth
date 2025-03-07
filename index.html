@@ -3,127 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aesthetic Photobooth</title>
+    <title>Photobooth App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .filter-section p {
+            color: #FF69B4;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .filter-btn {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+        }
+
+        .capture-btn {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+        }
+
+        .capture-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .capture-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .capture-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .camera-overlay {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 600;
+        }
+
+        .capture-count {
+            font-size: 3rem;
+            color: #FF69B4;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>✨ Aesthetic Photobooth ✨</h1>
-            <p class="subtitle">Create Instagram-worthy moments</p>
-        </header>
-
-        <main>
-            <div class="booth-container">
-                <div class="video-container">
-                    <video id="video" autoplay playsinline></video>
-                    <canvas id="photoCanvas" style="display: none;"></canvas>
-                    <div id="overlayContainer"></div>
-                    <div id="countdownTimer" class="countdown-timer"></div>
-                    <div class="quick-filters">
-                        <button class="quick-filter-btn active" data-filter="none">
-                            <i class="fas fa-circle"></i>
-                            <span>Normal</span>
-                        </button>
-                        <button class="quick-filter-btn" data-filter="vintage">
-                            <i class="fas fa-sun"></i>
-                            <span>Vintage</span>
-                        </button>
-                        <button class="quick-filter-btn" data-filter="noir">
-                            <i class="fas fa-moon"></i>
-                            <span>Noir</span>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="controls">
-                    <button id="captureBtn" class="primary-btn">
-                        <i class="fas fa-camera"></i>
-                        Photo Strip
-                    </button>
-                    <button id="singleCaptureBtn" class="primary-btn">
-                        <i class="fas fa-camera"></i>
-                        Single Shot
-                    </button>
-                    <button id="switchCameraBtn" class="secondary-btn">
-                        <i class="fas fa-sync"></i>
-                        Switch Camera
-                    </button>
-                </div>
-
-                <div class="filters-section">
-                    <div class="effects-panel">
-                        <h3><i class="fas fa-wand-magic-sparkles"></i> Instagram Filters</h3>
-                        <div class="filter-buttons">
-                            <button data-filter="none" class="active">Normal</button>
-                            <button data-filter="1977">1977</button>
-                            <button data-filter="aden">Aden</button>
-                            <button data-filter="gingham">Gingham</button>
-                            <button data-filter="moon">Moon</button>
-                            <button data-filter="lark">Lark</button>
-                            <button data-filter="reyes">Reyes</button>
-                            <button data-filter="brooklyn">Brooklyn</button>
-                        </div>
-                    </div>
-
-                    <div class="effects-panel">
-                        <h3><i class="fas fa-sliders"></i> Effects</h3>
-                        <div class="filter-buttons">
-                            <button data-filter="grayscale">B&W</button>
-                            <button data-filter="sepia">Vintage</button>
-                            <button data-filter="blur">Blur</button>
-                            <button data-filter="brightness">Bright</button>
-                            <button data-filter="contrast">Contrast</button>
-                            <button data-filter="hue-rotate">Color Shift</button>
-                            <button data-filter="invert">Invert</button>
-                            <button data-filter="saturate">Vibrant</button>
-                        </div>
-                    </div>
-
-                    <div class="stickers-panel">
-                        <h3><i class="fas fa-stars"></i> Stickers</h3>
-                        <div class="sticker-container">
-                            <div class="sticker" draggable="true" data-sticker="❤️">❤️</div>
-                            <div class="sticker" draggable="true" data-sticker="🌟">🌟</div>
-                            <div class="sticker" draggable="true" data-sticker="👑">👑</div>
-                            <div class="sticker" draggable="true" data-sticker="🌈">🌈</div>
-                            <div class="sticker" draggable="true" data-sticker="✨">✨</div>
-                            <div class="sticker" draggable="true" data-sticker="🦋">🦋</div>
-                            <div class="sticker" draggable="true" data-sticker="🌸">🌸</div>
-                            <div class="sticker" draggable="true" data-sticker="🎀">🎀</div>
-                        </div>
-                    </div>
+    <div class="app-container">
+        <div class="left-section">
+            <div class="camera-container">
+                <video id="camera" autoplay playsinline></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <div class="camera-overlay">
+                    <div class="capture-count" id="captureCount"></div>
                 </div>
             </div>
 
-            <div class="gallery-section">
-                <h2><i class="fas fa-images"></i> Gallery</h2>
-                <div id="photoGallery" class="photo-gallery"></div>
+            <div class="capture-button-container">
+                <button id="stripCaptureBtn" class="capture-btn">
+                    Start Capture ✨
+                </button>
             </div>
 
-            <div class="share-container">
-                <button id="downloadBtn" class="action-btn">
-                    <i class="fas fa-download"></i>
-                    Download
-                </button>
-                <button id="downloadStripBtn" class="action-btn">
-                    <i class="fas fa-images"></i>
-                    Download Strip
-                </button>
-                <button id="printBtn" class="action-btn">
-                    <i class="fas fa-print"></i>
-                    Print
-                </button>
-                <button id="shareBtn" class="action-btn">
-                    <i class="fas fa-share-alt"></i>
-                    Share
-                </button>
+            <div class="filter-section">
+                <p>Choose a filter before starting capture!</p>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-effect="normal">No Filter</button>
+                    <button class="filter-btn" data-effect="grayscale">Grayscale</button>
+                    <button class="filter-btn" data-effect="sepia">Sepia</button>
+                    <button class="filter-btn" data-effect="vintage">Vintage</button>
+                    <button class="filter-btn" data-effect="blur">Soft</button>
+                </div>
             </div>
-        </main>
+        </div>
+
+        <div class="right-section">
+            <div class="strips-gallery" id="stripsGallery"></div>
+        </div>
     </div>
-
     <script src="app.js"></script>
 </body>
 </html>
