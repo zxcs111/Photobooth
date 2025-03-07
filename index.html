@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aesthetic Photobooth</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Aesthetic Photobooth ✨</h1>
+        </header>
+
+        <main>
+            <div class="booth-container">
+                <div class="video-container">
+                    <video id="video" autoplay playsinline></video>
+                    <canvas id="photoCanvas" style="display: none;"></canvas>
+                    <div id="overlayContainer"></div>
+                </div>
+
+                <div class="controls">
+                    <button id="captureBtn" class="primary-btn">📸 Take Photo</button>
+                    <button id="switchCameraBtn" class="secondary-btn">🔄 Switch Camera</button>
+                </div>
+
+                <div class="effects-panel">
+                    <h3>Effects</h3>
+                    <div class="filter-buttons">
+                        <button data-filter="none" class="active">Normal</button>
+                        <button data-filter="grayscale">B&W</button>
+                        <button data-filter="sepia">Vintage</button>
+                        <button data-filter="brightness">Bright</button>
+                        <button data-filter="contrast">Contrast</button>
+                    </div>
+                </div>
+
+                <div class="stickers-panel">
+                    <h3>Stickers</h3>
+                    <div class="sticker-container">
+                        <img src="stickers/heart.png" class="sticker" draggable="true">
+                        <img src="stickers/star.png" class="sticker" draggable="true">
+                        <img src="stickers/crown.png" class="sticker" draggable="true">
+                        <img src="stickers/sunglasses.png" class="sticker" draggable="true">
+                    </div>
+                </div>
+
+                <div class="backdrop-panel">
+                    <h3>Backdrops</h3>
+                    <select id="backdropSelect">
+                        <option value="none">None</option>
+                        <option value="beach">Beach</option>
+                        <option value="forest">Forest</option>
+                        <option value="city">City</option>
+                        <option value="space">Space</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gallery-container">
+                <h2>Gallery</h2>
+                <div id="photoGallery"></div>
+            </div>
+
+            <div class="share-container">
+                <button id="downloadBtn" class="primary-btn">⬇️ Download</button>
+                <button id="printBtn" class="primary-btn">🖨️ Print</button>
+                <button id="shareBtn" class="primary-btn">📤 Share</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
