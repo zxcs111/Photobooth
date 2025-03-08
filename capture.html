@@ -5,77 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photobooth App</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        .filter-section p {
-            color: #FF69B4;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .filter-btn {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .filter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.2);
-        }
-
-        .filter-btn.active {
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            color: white;
-            border: none;
-        }
-
-        .capture-btn {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-        }
-
-        .capture-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
-        }
-
-        .capture-btn:active {
-            transform: translateY(-1px);
-        }
-
-        .capture-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .camera-overlay {
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-        }
-
-        .capture-count {
-            font-size: 3rem;
-            color: #FF69B4;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <nav class="navbar">
@@ -100,7 +30,7 @@
                 </div>
                 <div class="camera-container">
                     <video id="camera" autoplay playsinline></video>
-                    <canvas id="canvas" style="display: none;"></canvas>
+                    <canvas id="canvas"></canvas>
                     <div class="camera-overlay">
                         <div class="capture-count" id="captureCount"></div>
                     </div>
@@ -118,6 +48,6 @@
             <div class="strips-gallery" id="stripsGallery"></div>
         </div>
     </div>
-    <script src="app.js"></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>

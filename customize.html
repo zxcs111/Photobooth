@@ -4,108 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Customize Photostrip</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: #FFE5EC;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            font-family: 'Quicksand', sans-serif;
-        }
-
-        .customize-container {
-            background: transparent;
-            padding: 1rem;
-            text-align: center;
-            max-width: 100%;
-            width: fit-content;
-        }
-
-        h2 {
-            color: #FF69B4;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        #previewCanvas {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
-        }
-
-        .button-container {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.8rem 1.5rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: 600;
-        }
-
-        .customize-btn {
-            background: linear-gradient(45deg, #FF69B4, #FF1493);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
-        }
-
-        .discard-btn {
-            background: #FF6B6B;
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-        }
-
-        .customize-btn:hover {
-            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
-        }
-
-        .discard-btn:hover {
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn:active {
-            transform: translateY(-1px);
-        }
-
-        .btn-icon {
-            font-size: 1.2em;
-        }
-
-        @media (max-width: 480px) {
-            .btn {
-                padding: 0.7rem 1.2rem;
-                font-size: 1rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
     <div class="customize-container">
@@ -122,6 +22,6 @@
             </button>
         </div>
     </div>
-    <script src="customize.js"></script>
+    <script src="assets/js/customize.js"></script>
 </body>
 </html>
