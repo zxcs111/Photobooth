@@ -15,40 +15,7 @@
             <a href="about.html" class="nav-link">About</a>
         </div>
     </nav>
-    <div class="app-container">
-        <div class="left-section">
-            <div class="camera-section">
-                <div class="filter-section">
-                    <p>Choose a filter before starting capture!</p>
-                    <div class="filter-buttons">
-                        <button class="filter-btn active" data-effect="normal">No Filter</button>
-                        <button class="filter-btn" data-effect="grayscale">Grayscale</button>
-                        <button class="filter-btn" data-effect="sepia">Sepia</button>
-                        <button class="filter-btn" data-effect="vintage">Vintage</button>
-                        <button class="filter-btn" data-effect="blur">Soft</button>
-                    </div>
-                </div>
-                <div class="camera-wrapper">
-                    <div class="camera-container">
-                        <video id="camera" autoplay playsinline></video>
-                        <canvas id="canvas"></canvas>
-                        <div class="camera-overlay">
-                            <div class="capture-count" id="captureCount"></div>
-                        </div>
-                    </div>
-                    <div class="capture-button-container">
-                        <button id="stripCaptureBtn" class="capture-btn">
-                            Start Capture 
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="right-section">
-            <div class="strips-gallery" id="stripsGallery"></div>
-        </div>
-    </div>
+    
     <script src="assets/js/app.js"></script>
 </body>
 </html>
