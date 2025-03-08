@@ -170,7 +170,7 @@ class Photobooth {
         
         const customizeBtn = document.createElement('button');
         customizeBtn.className = 'btn customize-btn';
-        customizeBtn.innerHTML = '<span class="btn-icon">✨</span> Customize & Download';
+        customizeBtn.textContent = 'Customize';
         customizeBtn.onclick = () => {
             localStorage.setItem('photostrip', JSON.stringify(this.stripPhotos));
             window.location.href = 'customize.html';
@@ -178,7 +178,7 @@ class Photobooth {
         
         const discardBtn = document.createElement('button');
         discardBtn.className = 'btn discard-btn';
-        discardBtn.innerHTML = '<span class="btn-icon">🗑️</span> Discard & Retake';
+        discardBtn.textContent = 'Discard';
         discardBtn.onclick = () => {
             this.stripPhotos = [];
             this.stripsGallery.innerHTML = '';
