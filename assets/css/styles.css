@@ -88,13 +88,24 @@ body {
     margin-bottom: -3rem;
 }
 
+.camera-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    position: relative;
+    max-width: 600px;
+}
+
 .camera-container {
     width: 100%;
-    max-width: 700px;
+    max-width: 600px;
     aspect-ratio: 1/1;
-    position: relative;
-    border-radius: 10px;
+    border-radius: 15px;
     overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+    margin-bottom: 1rem;
     border: 2px solid #000;
 }
 
@@ -123,6 +134,13 @@ body {
     font-size: 3rem;
     color: #FF69B4;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.capture-button-container {
+    position: relative;
+    z-index: 10;
+    margin-top: -0.5rem;
+    text-align: center;
 }
 
 @keyframes pulse {
@@ -186,7 +204,7 @@ body {
 
 /* Capture button */
 .capture-button-container {
-    margin-top: -2rem;
+    margin-top: -0.5rem;
     text-align: center;
     width: 100%;
 }
@@ -395,6 +413,11 @@ body {
         margin-bottom: 0;
     }
     
+    .camera-wrapper {
+        width: 100%;
+        max-width: 600px;
+    }
+    
     .camera-container {
         max-width: 100%;
         aspect-ratio: 1/1;
@@ -402,13 +425,14 @@ body {
     
     .filter-section {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
     }
     
     .filter-buttons {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 0.75rem;
     }
     
     .filter-btn {
@@ -419,7 +443,7 @@ body {
     .right-section {
         width: 100%;
         max-width: 800px;
-        margin: 1rem auto;
+        margin: 1.5rem auto;
         height: auto;
         max-height: 300px;
     }
@@ -428,10 +452,29 @@ body {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 1rem;
     }
     
     .strip-photo {
         width: 150px;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .camera-wrapper {
+        max-width: 550px;
+    }
+    
+    .camera-container {
+        max-width: 100%;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
     }
 }
 
@@ -450,7 +493,12 @@ body {
         padding: 0.5rem;
     }
     
+    .camera-wrapper {
+        max-width: 500px;
+    }
+    
     .camera-container {
+        max-width: 100%;
         aspect-ratio: 4/3;
     }
     
@@ -461,6 +509,46 @@ body {
     
     .strip-photo {
         width: 120px;
+    }
+    
+    .filter-section p {
+        font-size: 1rem;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .camera-wrapper {
+        max-width: 450px;
+    }
+    
+    .camera-container {
+        max-width: 100%;
+        aspect-ratio: 1/1;
+    }
+    
+    .filter-section {
+        padding: 0.75rem;
+    }
+    
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    
+    .filter-btn {
+        min-width: 90px;
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .right-section {
+        max-height: 250px;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
     }
 }
 
@@ -479,6 +567,10 @@ body {
         margin-top: 4rem;
     }
     
+    .camera-wrapper {
+        max-width: 300px;
+    }
+    
     .filter-btn {
         padding: 0.6rem 0.8rem;
         font-size: 0.8rem;
@@ -492,6 +584,78 @@ body {
     
     .strip-photo {
         width: 100px;
+    }
+    
+    .capture-count {
+        font-size: 2.5rem;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .navbar {
+        width: 98%;
+    }
+    
+    .nav-link {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.75rem;
+    }
+    
+    .camera-wrapper {
+        max-width: 280px;
+    }
+    
+    .filter-btn {
+        padding: 0.5rem 0.7rem;
+        font-size: 0.75rem;
+        min-width: 70px;
+    }
+    
+    .capture-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+    
+    .strip-photo {
+        width: 90px;
+    }
+    
+    .right-section {
+        max-height: 200px;
+        padding: 0.5rem;
+    }
+    
+    .capture-count {
+        font-size: 2rem;
+    }
+}
+
+/* For very small devices */
+@media (max-width: 320px) {
+    .camera-wrapper {
+        max-width: 260px;
+    }
+    
+    .filter-buttons {
+        gap: 0.4rem;
+    }
+    
+    .filter-btn {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.7rem;
+        min-width: 65px;
+    }
+    
+    .strip-photo {
+        width: 80px;
+    }
+    
+    .capture-button-container {
+        margin-top: 0.5rem;
     }
 }
 

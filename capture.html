@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Photobooth App</title>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
@@ -11,7 +11,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="landing.html" class="nav-link">Home</a>
-            <a href="index.html" class="nav-link active">Capture</a>
+            <a href="capture.html" class="nav-link active">Capture</a>
             <a href="about.html" class="nav-link">About</a>
         </div>
     </nav>
@@ -28,19 +28,20 @@
                         <button class="filter-btn" data-effect="blur">Soft</button>
                     </div>
                 </div>
-                <div class="camera-container">
-                    <video id="camera" autoplay playsinline></video>
-                    <canvas id="canvas"></canvas>
-                    <div class="camera-overlay">
-                        <div class="capture-count" id="captureCount"></div>
+                <div class="camera-wrapper">
+                    <div class="camera-container">
+                        <video id="camera" autoplay playsinline></video>
+                        <canvas id="canvas"></canvas>
+                        <div class="camera-overlay">
+                            <div class="capture-count" id="captureCount"></div>
+                        </div>
+                    </div>
+                    <div class="capture-button-container">
+                        <button id="stripCaptureBtn" class="capture-btn">
+                            Start Capture 
+                        </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="capture-button-container">
-                <button id="stripCaptureBtn" class="capture-btn">
-                    Start Capture ✨
-                </button>
             </div>
         </div>
 
