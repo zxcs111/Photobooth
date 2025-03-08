@@ -13,9 +13,9 @@ class Photobooth {
         this.isCapturingStrip = false;
         this.currentEffect = 'normal';
         
-        // Set up canvas with 4:3 aspect ratio
-        this.canvas.width = 640;
-        this.canvas.height = 480;
+        // Set up canvas with 1:1 aspect ratio for square photos
+        this.canvas.width = 700;
+        this.canvas.height = 700;
         
         // Clear any existing state
         this.stripsGallery.innerHTML = '';
@@ -50,16 +50,16 @@ class Photobooth {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: {
-                    width: { ideal: 640 },
-                    height: { ideal: 480 },
+                    width: { ideal: 700 },
+                    height: { ideal: 700 },
                     facingMode: 'user',
-                    aspectRatio: { ideal: 4/3 }
+                    aspectRatio: { ideal: 1 }
                 }
             });
             this.video.srcObject = stream;
             // Ensure video dimensions match canvas
-            this.video.width = 640;
-            this.video.height = 480;
+            this.video.width = 700;
+            this.video.height = 700;
         } catch (err) {
             console.error('Error accessing camera:', err);
             alert('Unable to access camera. Please make sure you have granted camera permissions.');
@@ -113,15 +113,13 @@ class Photobooth {
     }
 
     takePhoto() {
-        // Calculate dimensions to maintain aspect ratio
-        const aspectRatio = 4/3;
-        const targetHeight = 100; // Match CSS height
-        const targetWidth = targetHeight * aspectRatio;
+        // Use square dimensions for photos
+        const targetSize = 150; // Small square size for gallery display
 
-        // Create a temporary canvas for the cropped photo
+        // Create a temporary canvas for the square photo
         const tempCanvas = document.createElement('canvas');
-        tempCanvas.width = targetWidth;
-        tempCanvas.height = targetHeight;
+        tempCanvas.width = targetSize;
+        tempCanvas.height = targetSize;
         const tempCtx = tempCanvas.getContext('2d');
 
         // Mirror effect and scale down
@@ -130,7 +128,7 @@ class Photobooth {
         tempCtx.drawImage(
             this.video, 
             0, 0, this.video.width, this.video.height,
-            -targetWidth, 0, targetWidth, targetHeight
+            -targetSize, 0, targetSize, targetSize
         );
         tempCtx.restore();
         

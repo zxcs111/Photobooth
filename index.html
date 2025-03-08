@@ -78,13 +78,32 @@
     </style>
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="landing.html" class="nav-link">Home</a>
+            <a href="index.html" class="nav-link active">Capture</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </nav>
     <div class="app-container">
         <div class="left-section">
-            <div class="camera-container">
-                <video id="camera" autoplay playsinline></video>
-                <canvas id="canvas" style="display: none;"></canvas>
-                <div class="camera-overlay">
-                    <div class="capture-count" id="captureCount"></div>
+            <div class="camera-section">
+                <div class="filter-section">
+                    <p>Choose a filter before starting capture!</p>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-effect="normal">No Filter</button>
+                        <button class="filter-btn" data-effect="grayscale">Grayscale</button>
+                        <button class="filter-btn" data-effect="sepia">Sepia</button>
+                        <button class="filter-btn" data-effect="vintage">Vintage</button>
+                        <button class="filter-btn" data-effect="blur">Soft</button>
+                    </div>
+                </div>
+                <div class="camera-container">
+                    <video id="camera" autoplay playsinline></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                    <div class="camera-overlay">
+                        <div class="capture-count" id="captureCount"></div>
+                    </div>
                 </div>
             </div>
 
@@ -92,17 +111,6 @@
                 <button id="stripCaptureBtn" class="capture-btn">
                     Start Capture ✨
                 </button>
-            </div>
-
-            <div class="filter-section">
-                <p>Choose a filter before starting capture!</p>
-                <div class="filter-buttons">
-                    <button class="filter-btn active" data-effect="normal">No Filter</button>
-                    <button class="filter-btn" data-effect="grayscale">Grayscale</button>
-                    <button class="filter-btn" data-effect="sepia">Sepia</button>
-                    <button class="filter-btn" data-effect="vintage">Vintage</button>
-                    <button class="filter-btn" data-effect="blur">Soft</button>
-                </div>
             </div>
         </div>
 
