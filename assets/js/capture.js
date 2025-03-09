@@ -140,8 +140,8 @@ async function startCaptureSequence() {
     // Show "Ready!"
     await showCountdownMessage('Ready!', 1500);
     
-    // Count 1, 2, 3
-    for(let i = 1; i <= 3; i++) {
+    // Count 3, 2, 1
+    for(let i = 3; i >= 1; i--) {
         await showCountdownMessage(i, 1000);
     }
     
@@ -154,8 +154,8 @@ async function startCaptureSequence() {
 
     // For remaining 3 photos
     for(let i = 2; i <= 4; i++) {
-        // Count 1, 2, 3
-        for(let j = 1; j <= 3; j++) {
+        // Count 3, 2, 1
+        for(let j = 3; j >= 1; j--) {
             await showCountdownMessage(j, 1000);
         }
         
