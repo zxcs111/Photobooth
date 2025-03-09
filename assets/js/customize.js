@@ -2,6 +2,7 @@
 const storedPhotos = JSON.parse(sessionStorage.getItem('capturedPhotos') || '[]');
 const photostrip = document.getElementById('photostrip');
 const photoSlots = document.querySelectorAll('.photo-slot');
+const frameBottom = document.querySelector('.frame-bottom');
 const colorBtns = document.querySelectorAll('.color-btn');
 const downloadBtn = document.getElementById('downloadBtn');
 const canvas = document.getElementById('drawingCanvas');
@@ -20,9 +21,13 @@ function initializePhotostrip() {
     photoSlots.forEach((slot, index) => {
         if (storedPhotos[index]) {
             slot.style.backgroundImage = `url(${storedPhotos[index]})`;
-            slot.classList.add('active');
         }
     });
+
+    // Set initial frame color to black
+    const blackBtn = document.querySelector('[data-color="black"]');
+    blackBtn.classList.add('active');
+    photostrip.style.backgroundColor = 'black';
 }
 
 // Frame color selection
@@ -34,54 +39,43 @@ colorBtns.forEach(btn => {
     });
 });
 
-// Sticker drag and drop functionality
-let activeSticker = null;
+// Sticker click-to-add functionality
 const stickers = document.querySelectorAll('.sticker');
+let selectedSticker = null;
 
 stickers.forEach(sticker => {
-    sticker.addEventListener('dragstart', handleDragStart);
-    sticker.addEventListener('dragend', handleDragEnd);
+    sticker.addEventListener('click', () => {
+        stickers.forEach(s => s.classList.remove('selected'));
+        sticker.classList.add('selected');
+        selectedSticker = sticker;
+    });
 });
 
-photoSlots.forEach(slot => {
-    slot.addEventListener('dragover', handleDragOver);
-    slot.addEventListener('drop', handleDrop);
-});
-
-function handleDragStart(e) {
-    activeSticker = this;
-    this.classList.add('dragging');
-    e.dataTransfer.setData('text/plain', this.src);
-    e.dataTransfer.effectAllowed = 'copy';
-}
-
-function handleDragEnd() {
-    this.classList.remove('dragging');
-}
-
-function handleDragOver(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'copy';
-}
-
-function handleDrop(e) {
-    e.preventDefault();
-    if (activeSticker) {
-        const rect = this.getBoundingClientRect();
+// Add sticker on click in photo slots or bottom area
+[...photoSlots, frameBottom].forEach(container => {
+    container.addEventListener('click', (e) => {
+        if (!selectedSticker) return;
+        
+        const rect = container.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        createSticker(this, activeSticker.src, x, y);
-    }
-}
+        createSticker(container, selectedSticker.src, x, y);
+    });
+});
 
 function createSticker(container, stickerSrc, x, y) {
     const stickerImg = document.createElement('img');
     stickerImg.src = stickerSrc;
     stickerImg.classList.add('placed-sticker');
     
-    // Center the sticker at the drop point
-    const stickerSize = 50;
+    // Make stickers in bottom area larger
+    if (container.classList.contains('frame-bottom')) {
+        stickerImg.classList.add('in-bottom');
+    }
+    
+    // Center the sticker at the click point
+    const stickerSize = container.classList.contains('frame-bottom') ? 50 : 40;
     stickerImg.style.cssText = `
         position: absolute;
         left: ${x - stickerSize/2}px;
@@ -127,7 +121,7 @@ function makeStickerDraggable(sticker) {
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             
-            // Constrain sticker movement within the photo slot
+            // Constrain sticker movement within the container
             const maxX = rect.width - sticker.offsetWidth;
             const maxY = rect.height - sticker.offsetHeight;
             
@@ -157,27 +151,25 @@ function makeStickerDraggable(sticker) {
 
 // Download functionality using native canvas
 downloadBtn.addEventListener('click', async () => {
-    // Set canvas size to match 2:6 ratio
+    // Set canvas size to match frame proportions
     const width = 600;  // Base width
-    const height = width * 3;  // Height is 3x width to achieve 2:6 ratio
+    const height = width * 1.5;  // Adjust height to match frame proportions
     canvas.width = width;
     canvas.height = height;
     
     // Draw background color
-    ctx.fillStyle = photostrip.style.backgroundColor || 'white';
+    ctx.fillStyle = photostrip.style.backgroundColor || 'black';
     ctx.fillRect(0, 0, width, height);
     
-    // Calculate photo dimensions for 2:6 layout
-    const padding = width * 0.1;
+    // Calculate photo dimensions
+    const padding = 3;  // Same as CSS padding
     const photoWidth = width - (padding * 2);
-    const photoHeight = photoWidth;  // Keep photos square
-    const verticalSpacing = (height - (photoHeight * 4)) / 5;  // Space between photos
+    const photoHeight = photoWidth;
+    const photoSpacing = padding;
     
-    // Draw each photo and its stickers
+    // Draw photos and their stickers
     for (let i = 0; i < photoSlots.length; i++) {
-        const slot = photoSlots[i];
         const photoUrl = storedPhotos[i];
-        
         if (photoUrl) {
             // Draw photo
             const img = new Image();
@@ -186,29 +178,21 @@ downloadBtn.addEventListener('click', async () => {
                 img.src = photoUrl;
             });
             
-            const y = padding + (i * (photoHeight + verticalSpacing));
+            const y = padding + (i * (photoHeight + photoSpacing));
+            ctx.fillStyle = 'white';
+            ctx.fillRect(padding, y, photoWidth, photoHeight);
             ctx.drawImage(img, padding, y, photoWidth, photoHeight);
             
-            // Draw stickers
-            const stickers = slot.querySelectorAll('.placed-sticker');
-            for (const sticker of stickers) {
-                const stickerImg = new Image();
-                await new Promise(resolve => {
-                    stickerImg.onload = resolve;
-                    stickerImg.src = sticker.src;
-                });
-
-                const rect = slot.getBoundingClientRect();
-                const scale = photoWidth / rect.width;
-                const stickerSize = parseFloat(sticker.style.width) * scale;
-                
-                const stickerX = padding + (parseFloat(sticker.style.left) * scale);
-                const stickerY = y + (parseFloat(sticker.style.top) * scale);
-                
-                ctx.drawImage(stickerImg, stickerX, stickerY, stickerSize, stickerSize);
-            }
+            // Draw stickers for this photo
+            const stickers = photoSlots[i].querySelectorAll('.placed-sticker');
+            await drawStickers(stickers, padding, y, photoWidth, photoHeight);
         }
     }
+    
+    // Draw bottom area stickers
+    const bottomStickers = frameBottom.querySelectorAll('.placed-sticker');
+    const bottomY = padding + (4 * (photoHeight + photoSpacing));
+    await drawStickers(bottomStickers, padding, bottomY, photoWidth, height - bottomY - padding);
     
     // Create download link
     const link = document.createElement('a');
@@ -216,6 +200,25 @@ downloadBtn.addEventListener('click', async () => {
     link.href = canvas.toDataURL('image/png');
     link.click();
 });
+
+async function drawStickers(stickers, offsetX, offsetY, containerWidth, containerHeight) {
+    for (const sticker of stickers) {
+        const stickerImg = new Image();
+        await new Promise(resolve => {
+            stickerImg.onload = resolve;
+            stickerImg.src = sticker.src;
+        });
+
+        const rect = sticker.parentElement.getBoundingClientRect();
+        const scale = containerWidth / rect.width;
+        const stickerSize = parseFloat(sticker.style.width) * scale;
+        
+        const stickerX = offsetX + (parseFloat(sticker.style.left) * scale);
+        const stickerY = offsetY + (parseFloat(sticker.style.top) * scale);
+        
+        ctx.drawImage(stickerImg, stickerX, stickerY, stickerSize, stickerSize);
+    }
+}
 
 // Initialize the photostrip
 initializePhotostrip();
