@@ -197,47 +197,43 @@ async function capturePhoto(index) {
     ctx.filter = getFilterStyle(currentFilter);
     ctx.drawImage(video, 0, 0);
     
+    const dataUrl = canvas.toDataURL();
+    capturedPhotos[index - 1] = dataUrl;
+    
     const photoSlot = document.getElementById(`photo${index}`);
-    photoSlot.style.backgroundImage = `url(${canvas.toDataURL()})`;
-    capturedPhotos.push(canvas.toDataURL());
+    photoSlot.style.backgroundImage = `url(${dataUrl})`;
 }
 
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize camera permission check on load
     checkCameraPermission();
-
-    // Button event listeners
-    startCaptureBtn.addEventListener('click', startCaptureSequence);
     
-    document.getElementById('requestPermission').addEventListener('click', async () => {
-        await initCamera();
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            applyFilter(btn.dataset.filter);
+        });
     });
-
+    
+    // Start capture button
+    document.getElementById('startCapture').addEventListener('click', startCaptureSequence);
+    
+    // Request permission button
+    document.getElementById('requestPermission').addEventListener('click', initCamera);
+    
+    // Customize button - save photos and redirect
+    document.getElementById('customizeBtn').addEventListener('click', () => {
+        sessionStorage.setItem('capturedPhotos', JSON.stringify(capturedPhotos));
+        window.location.href = 'customize.html';
+    });
+    
+    // Discard button
     document.getElementById('discardBtn').addEventListener('click', () => {
         capturedPhotos = [];
         document.querySelectorAll('.photo-slot').forEach(slot => {
             slot.style.backgroundImage = 'none';
         });
         document.getElementById('finalButtons').classList.add('hidden');
-        startCaptureBtn.disabled = false;
-    });
-
-    document.getElementById('customizeBtn').addEventListener('click', () => {
-        localStorage.setItem('photos', JSON.stringify(capturedPhotos));
-        window.location.href = 'customize.html';
-    });
-
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            applyFilter(btn.dataset.filter);
-        });
-    });
-
-    // Add visibility change handler to reinitialize camera when tab becomes visible
-    document.addEventListener('visibilitychange', () => {
-        if (document.visibilityState === 'visible' && !stream) {
-            initCamera();
-        }
     });
 });

@@ -9,14 +9,18 @@ const ctx = canvas.getContext('2d');
 
 // Initialize the frame with captured photos
 function initializePhotostrip() {
+    // Check if we have photos to display
+    if (!storedPhotos || storedPhotos.length === 0) {
+        // Redirect back to capture page if no photos
+        window.location.href = 'capture.html';
+        return;
+    }
+
+    // Display photos
     photoSlots.forEach((slot, index) => {
         if (storedPhotos[index]) {
-            const img = new Image();
-            img.onload = () => {
-                slot.style.backgroundImage = `url(${storedPhotos[index]})`;
-            };
-            img.src = storedPhotos[index];
-            slot.dataset.photoUrl = storedPhotos[index];
+            slot.style.backgroundImage = `url(${storedPhotos[index]})`;
+            slot.classList.add('active');
         }
     });
 }
@@ -106,11 +110,10 @@ function makeStickerDraggable(sticker) {
     document.addEventListener('mouseup', dragEnd);
 
     function dragStart(e) {
-        e.preventDefault();
-        initialX = e.clientX - xOffset;
-        initialY = e.clientY - yOffset;
-        
         if (e.target === sticker) {
+            e.preventDefault();
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
             isDragging = true;
             sticker.style.zIndex = '20';
         }
@@ -136,7 +139,6 @@ function makeStickerDraggable(sticker) {
 
             sticker.style.left = currentX + 'px';
             sticker.style.top = currentY + 'px';
-            sticker.style.transform = 'none';
         }
     }
 
@@ -174,7 +176,7 @@ downloadBtn.addEventListener('click', async () => {
     // Draw each photo and its stickers
     for (let i = 0; i < photoSlots.length; i++) {
         const slot = photoSlots[i];
-        const photoUrl = slot.dataset.photoUrl;
+        const photoUrl = storedPhotos[i];
         
         if (photoUrl) {
             // Draw photo
