@@ -3,11 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customize Photostrip</title>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <title>Customize Your Photos</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="landing.html" class="nav-link">Home</a>
+            <a href="capture.html" class="nav-link">Capture</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="customize.html" class="nav-link active">Customize</a>
+        </div>
+    </nav>
+
+    <div class="customize-container">
+        <div class="customize-workspace">
+            <!-- Hidden canvas for drawing -->
+            <canvas id="drawingCanvas" style="display: none;"></canvas>
+            
+            <!-- Photostrip Preview -->
+            <div class="photostrip-preview">
+                <div class="frame-container" id="photostrip">
+                    <div class="photo-slot" data-index="0"></div>
+                    <div class="photo-slot" data-index="1"></div>
+                    <div class="photo-slot" data-index="2"></div>
+                    <div class="photo-slot" data-index="3"></div>
+                </div>
+            </div>
+
+            <!-- Customization Tools -->
+            <div class="customize-tools">
+                <!-- Frame Color Selection -->
+                <div class="tool-section">
+                    <h3>Frame Color</h3>
+                    <div class="color-options">
+                        <button class="color-btn active" data-color="white" style="background: white;"></button>
+                        <button class="color-btn" data-color="black" style="background: black;"></button>
+                        <button class="color-btn" data-color="pink" style="background: #FFB6C1;"></button>
+                        <button class="color-btn" data-color="gold" style="background: #FFD700;"></button>
+                        <button class="color-btn" data-color="silver" style="background: #C0C0C0;"></button>
+                    </div>
+                </div>
+
+                <!-- Stickers Section -->
+                <div class="tool-section">
+                    <h3>Stickers</h3>
+                    <div class="sticker-options">
+                        <div class="sticker-category">
+                            <h4>Emojis</h4>
+                            <div class="sticker-grid">
+                                <img src="assets/stickers/heart.svg" class="sticker" draggable="true" alt="Heart">
+                                <img src="assets/stickers/star.svg" class="sticker" draggable="true" alt="Star">
+                                <img src="assets/stickers/smile.svg" class="sticker" draggable="true" alt="Smile">
+                                <img src="assets/stickers/flower.svg" class="sticker" draggable="true" alt="Flower">
+                            </div>
+                        </div>
+                        <div class="sticker-category">
+                            <h4>Decorative</h4>
+                            <div class="sticker-grid">
+                                <img src="assets/stickers/sparkle.svg" class="sticker" draggable="true" alt="Sparkle">
+                                <img src="assets/stickers/crown.svg" class="sticker" draggable="true" alt="Crown">
+                                <img src="assets/stickers/ribbon.svg" class="sticker" draggable="true" alt="Ribbon">
+                                <img src="assets/stickers/heart-frame.svg" class="sticker" draggable="true" alt="Heart Frame">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Download Button -->
+        <div class="download-section">
+            <button id="downloadBtn" class="primary-btn">
+                <span class="material-icons">download</span>
+                Download Photostrip
+            </button>
+        </div>
+    </div>
+
     <script src="assets/js/customize.js"></script>
 </body>
 </html>
