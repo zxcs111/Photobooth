@@ -18,12 +18,9 @@
     </nav>
 
     <div class="customize-container">
-        <div class="customize-workspace">
-            <!-- Hidden canvas for drawing -->
-            <canvas id="drawingCanvas" style="display: none;"></canvas>
-            
+        <div class="customize-layout">
             <!-- Photostrip Preview -->
-            <div class="photostrip-preview">
+            <div class="photostrip-section">
                 <div class="frame-container" id="photostrip">
                     <div class="photo-slot" data-index="0"></div>
                     <div class="photo-slot" data-index="1"></div>
@@ -33,10 +30,9 @@
             </div>
 
             <!-- Customization Tools -->
-            <div class="customize-tools">
-                <!-- Frame Color Selection -->
-                <div class="tool-section">
-                    <h3>Frame Color</h3>
+            <div class="tools-section">
+                <div class="tool-group">
+                    <h2>FRAME COLOR</h2>
                     <div class="color-options">
                         <button class="color-btn active" data-color="white" style="background: white;"></button>
                         <button class="color-btn" data-color="black" style="background: black;"></button>
@@ -46,40 +42,28 @@
                     </div>
                 </div>
 
-                <!-- Stickers Section -->
-                <div class="tool-section">
-                    <h3>Stickers</h3>
-                    <div class="sticker-options">
-                        <div class="sticker-category">
-                            <h4>Emojis</h4>
-                            <div class="sticker-grid">
-                                <img src="assets/stickers/heart.svg" class="sticker" draggable="true" alt="Heart">
-                                <img src="assets/stickers/star.svg" class="sticker" draggable="true" alt="Star">
-                                <img src="assets/stickers/smile.svg" class="sticker" draggable="true" alt="Smile">
-                                <img src="assets/stickers/flower.svg" class="sticker" draggable="true" alt="Flower">
-                            </div>
-                        </div>
-                        <div class="sticker-category">
-                            <h4>Decorative</h4>
-                            <div class="sticker-grid">
-                                <img src="assets/stickers/sparkle.svg" class="sticker" draggable="true" alt="Sparkle">
-                                <img src="assets/stickers/crown.svg" class="sticker" draggable="true" alt="Crown">
-                                <img src="assets/stickers/ribbon.svg" class="sticker" draggable="true" alt="Ribbon">
-                                <img src="assets/stickers/heart-frame.svg" class="sticker" draggable="true" alt="Heart Frame">
-                            </div>
-                        </div>
+                <div class="tool-group">
+                    <h2>STICKERS</h2>
+                    <div class="sticker-grid">
+                        <img src="assets/stickers/heart.svg" class="sticker" draggable="true" alt="Heart">
+                        <img src="assets/stickers/star.svg" class="sticker" draggable="true" alt="Star">
+                        <img src="assets/stickers/smile.svg" class="sticker" draggable="true" alt="Smile">
+                        <img src="assets/stickers/flower.svg" class="sticker" draggable="true" alt="Flower">
+                        <img src="assets/stickers/sparkle.svg" class="sticker" draggable="true" alt="Sparkle">
+                        <img src="assets/stickers/crown.svg" class="sticker" draggable="true" alt="Crown">
+                        <img src="assets/stickers/ribbon.svg" class="sticker" draggable="true" alt="Ribbon">
+                        <img src="assets/stickers/heart-frame.svg" class="sticker" draggable="true" alt="Heart Frame">
                     </div>
                 </div>
+
+                <button id="downloadBtn" class="download-btn">
+                    Download Photostrip
+                </button>
             </div>
         </div>
 
-        <!-- Download Button -->
-        <div class="download-section">
-            <button id="downloadBtn" class="primary-btn">
-                <span class="material-icons">download</span>
-                Download Photostrip
-            </button>
-        </div>
+        <!-- Hidden canvas for drawing -->
+        <canvas id="drawingCanvas" style="display: none;"></canvas>
     </div>
 
     <script src="assets/js/customize.js"></script>

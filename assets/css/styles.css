@@ -672,7 +672,6 @@ body {
 .photo-slot {
     aspect-ratio: 1/1;
     background: #FFE5EC;
-    border-radius: 12px;
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -802,118 +801,116 @@ body {
 
 /* Customize page styles */
 .customize-container {
-    max-width: 1200px;
-    margin: 7rem auto 2rem;
-    padding: 2rem;
-}
-
-.customize-workspace {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-/* Photostrip Preview */
-.photostrip-preview {
-    background: transparent;
-    padding: 1.5rem;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    margin-top: 60px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 80vh;
+    padding: 2rem;
+}
+
+.customize-layout {
+    display: flex;
+    gap: 4rem;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+}
+
+/* Photostrip Section */
+.photostrip-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
 .frame-container {
     width: 300px;
     background: white;
     padding: 20px;
-    border-radius: 15px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     aspect-ratio: 2/6;
-    position: relative;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .photo-slot {
     flex: 1;
     aspect-ratio: 1/1;
-    background: #FFE5EC;
-    border-radius: 12px;
+    background: #F5F5F5;
     background-size: cover;
     background-position: center;
     position: relative;
     overflow: hidden;
 }
 
-/* Customization Tools */
-.customize-tools {
-    background: transparent;
-    padding: 1.5rem;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 100px;
+.download-btn {
+    width: 100%;
+    padding: 12px;
+    background: #000;
+    color: white;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.tool-section {
-    margin-bottom: 2rem;
+.download-btn:hover {
+    background: #333;
 }
 
-.tool-section h3 {
-    color: #FF69B4;
+/* Tools Section */
+.tools-section {
+    flex: 1;
+    max-width: 400px;
+}
+
+.tool-group {
+    margin-bottom: 3rem;
+}
+
+.tool-group h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
     margin-bottom: 1rem;
-    font-size: 1.2rem;
-}
-
-.tool-section h4 {
-    color: #FF69B4;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
+    letter-spacing: 0.5px;
 }
 
 /* Color Options */
 .color-options {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 0.8rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .color-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid rgba(255, 182, 193, 0.6);
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 1px solid #DDD;
     cursor: pointer;
-    transition: all 0.3s ease;
-    background: transparent;
+    transition: transform 0.2s ease;
 }
 
 .color-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
+    transform: scale(1.05);
 }
 
 .color-btn.active {
-    border: 3px solid #FF1493;
-    transform: scale(1.1);
+    border: 2px solid #000;
 }
 
-/* Sticker Options */
-.sticker-options {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
+/* Sticker Grid */
 .sticker-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 0.8rem;
+    gap: 1rem;
 }
 
 .sticker {
@@ -921,15 +918,13 @@ body {
     aspect-ratio: 1/1;
     object-fit: contain;
     cursor: move;
-    transition: transform 0.3s ease;
-    padding: 5px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.1);
+    padding: 8px;
+    background: #F5F5F5;
+    transition: background-color 0.2s ease;
 }
 
 .sticker:hover {
-    transform: scale(1.1);
-    background: rgba(255, 255, 255, 0.2);
+    background: #EBEBEB;
 }
 
 .sticker.dragging {
@@ -942,53 +937,30 @@ body {
     height: 50px;
     cursor: move;
     transition: transform 0.2s ease;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
 }
 
 .placed-sticker:hover {
     transform: scale(1.1) !important;
 }
 
-/* Download Section */
-.download-section {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-}
-
-.download-section .primary-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    background: transparent;
-    border: 2px solid rgba(255, 105, 180, 0.8);
-    color: #FF69B4;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    backdrop-filter: blur(5px);
-}
-
-.download-section .primary-btn:hover {
-    background: rgba(255, 105, 180, 0.1);
-    transform: translateY(-2px);
-}
-
-.download-section .primary-btn .material-icons {
-    font-size: 1.2rem;
-}
-
 /* Responsive Design */
 @media (max-width: 1024px) {
-    .customize-workspace {
-        grid-template-columns: 1fr;
+    .customize-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
     }
 
-    .customize-tools {
-        position: static;
-        margin-top: 2rem;
+    .tools-section {
+        width: 100%;
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .customize-container {
+        padding: 1rem;
     }
 
     .frame-container {
@@ -996,18 +968,12 @@ body {
     }
 }
 
-@media (max-width: 768px) {
-    .customize-container {
-        margin: 6rem 1rem 2rem;
-        padding: 1rem;
-    }
-
+@media (max-width: 480px) {
     .sticker-grid {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    .photostrip-preview {
-        min-height: auto;
-        padding: 1rem;
+    .color-options {
+        gap: 0.5rem;
     }
 }

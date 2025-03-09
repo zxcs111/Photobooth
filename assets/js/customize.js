@@ -48,6 +48,7 @@ function handleDragStart(e) {
     activeSticker = this;
     this.classList.add('dragging');
     e.dataTransfer.setData('text/plain', this.src);
+    e.dataTransfer.effectAllowed = 'copy';
 }
 
 function handleDragEnd() {
@@ -56,32 +57,39 @@ function handleDragEnd() {
 
 function handleDragOver(e) {
     e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
 }
 
 function handleDrop(e) {
     e.preventDefault();
     if (activeSticker) {
-        const stickerImg = document.createElement('img');
-        stickerImg.src = e.dataTransfer.getData('text/plain');
-        stickerImg.classList.add('placed-sticker');
-        
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         
-        stickerImg.style.cssText = `
-            position: absolute;
-            left: ${x - 25}px;
-            top: ${y - 25}px;
-            width: 50px;
-            height: 50px;
-            cursor: move;
-            z-index: 10;
-        `;
-        
-        makeStickerDraggable(stickerImg);
-        this.appendChild(stickerImg);
+        createSticker(this, activeSticker.src, x, y);
     }
+}
+
+function createSticker(container, stickerSrc, x, y) {
+    const stickerImg = document.createElement('img');
+    stickerImg.src = stickerSrc;
+    stickerImg.classList.add('placed-sticker');
+    
+    // Center the sticker at the drop point
+    const stickerSize = 50;
+    stickerImg.style.cssText = `
+        position: absolute;
+        left: ${x - stickerSize/2}px;
+        top: ${y - stickerSize/2}px;
+        width: ${stickerSize}px;
+        height: ${stickerSize}px;
+        cursor: move;
+        z-index: 10;
+    `;
+    
+    makeStickerDraggable(stickerImg);
+    container.appendChild(stickerImg);
 }
 
 function makeStickerDraggable(sticker) {
@@ -98,36 +106,51 @@ function makeStickerDraggable(sticker) {
     document.addEventListener('mouseup', dragEnd);
 
     function dragStart(e) {
+        e.preventDefault();
         initialX = e.clientX - xOffset;
         initialY = e.clientY - yOffset;
         
         if (e.target === sticker) {
             isDragging = true;
+            sticker.style.zIndex = '20';
         }
     }
 
     function drag(e) {
         if (isDragging) {
             e.preventDefault();
-            currentX = e.clientX - initialX;
-            currentY = e.clientY - initialY;
+            
+            const rect = sticker.parentElement.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Constrain sticker movement within the photo slot
+            const maxX = rect.width - sticker.offsetWidth;
+            const maxY = rect.height - sticker.offsetHeight;
+            
+            currentX = Math.min(Math.max(0, x - sticker.offsetWidth/2), maxX);
+            currentY = Math.min(Math.max(0, y - sticker.offsetHeight/2), maxY);
 
             xOffset = currentX;
             yOffset = currentY;
 
-            setTranslate(currentX, currentY, sticker);
+            sticker.style.left = currentX + 'px';
+            sticker.style.top = currentY + 'px';
+            sticker.style.transform = 'none';
         }
     }
 
-    function setTranslate(xPos, yPos, el) {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    function dragEnd() {
+        if (isDragging) {
+            isDragging = false;
+            sticker.style.zIndex = '10';
+        }
     }
 
-    function dragEnd() {
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-    }
+    // Double click to remove sticker
+    sticker.addEventListener('dblclick', () => {
+        sticker.remove();
+    });
 }
 
 // Download functionality using native canvas
@@ -173,20 +196,14 @@ downloadBtn.addEventListener('click', async () => {
                     stickerImg.src = sticker.src;
                 });
 
-                const transform = sticker.style.transform;
-                const matches = transform.match(/translate3d\((.+)px,\s*(.+)px/);
+                const rect = slot.getBoundingClientRect();
+                const scale = photoWidth / rect.width;
+                const stickerSize = parseFloat(sticker.style.width) * scale;
                 
-                if (matches) {
-                    const [_, sX, sY] = matches;
-                    const scale = photoWidth / slot.offsetWidth;
-                    const stickerSize = 50 * scale;
-                    
-                    // Calculate sticker position relative to photo
-                    const stickerX = padding + (parseFloat(sX) * scale);
-                    const stickerY = y + (parseFloat(sY) * scale);
-                    
-                    ctx.drawImage(stickerImg, stickerX, stickerY, stickerSize, stickerSize);
-                }
+                const stickerX = padding + (parseFloat(sticker.style.left) * scale);
+                const stickerY = y + (parseFloat(sticker.style.top) * scale);
+                
+                ctx.drawImage(stickerImg, stickerX, stickerY, stickerSize, stickerSize);
             }
         }
     }
