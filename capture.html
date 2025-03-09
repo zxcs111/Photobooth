@@ -15,7 +15,54 @@
             <a href="about.html" class="nav-link">About</a>
         </div>
     </nav>
-    
-    <script src="assets/js/app.js"></script>
+
+    <div class="capture-container">
+        <!-- Left side - Filters -->
+        <div class="filters-panel">
+            <h3>✨ Filters</h3>
+            <div class="filter-options">
+                <button class="filter-btn" data-filter="none">🎨 Normal</button>
+                <button class="filter-btn" data-filter="grayscale">⚫ Grayscale</button>
+                <button class="filter-btn" data-filter="sepia">🌅 Sepia</button>
+                <button class="filter-btn" data-filter="brightness">💫 Bright</button>
+            </div>
+        </div>
+
+        <!-- Center - Camera -->
+        <div class="camera-section">
+            <div class="camera-container">
+                <video id="camera" autoplay playsinline></video>
+                <div class="countdown-overlay" id="countdown"></div>
+                <div class="camera-permission-overlay" id="permissionOverlay">
+                    <div class="permission-content">
+                        <div class="permission-icon">📸</div>
+                        <h3>Camera Access Needed</h3>
+                        <p>Please allow access to your camera to use the photobooth</p>
+                        <button id="requestPermission" class="primary-btn">Enable Camera</button>
+                    </div>
+                </div>
+            </div>
+            <div class="capture-controls">
+                <button id="startCapture" class="primary-btn" disabled>📸 Start Capture</button>
+            </div>
+        </div>
+
+        <!-- Right side - Captured Images -->
+        <div class="preview-panel">
+            <h3>🖼️ Photos</h3>
+            <div class="photo-strip">
+                <div class="photo-slot" id="photo1"></div>
+                <div class="photo-slot" id="photo2"></div>
+                <div class="photo-slot" id="photo3"></div>
+                <div class="photo-slot" id="photo4"></div>
+            </div>
+            <div class="action-buttons hidden" id="finalButtons">
+                <button id="customizeBtn" class="primary-btn">✨ Customize</button>
+                <button id="discardBtn" class="secondary-btn">🗑️ Discard</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/capture.js"></script>
 </body>
 </html>
