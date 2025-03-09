@@ -113,6 +113,15 @@ function applyFilter(filter) {
     currentFilter = filter;
     const video = document.getElementById('camera');
     video.style.filter = getFilterStyle(filter);
+    
+    // Update active filter button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        if (btn.dataset.filter === filter) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
 
 function getFilterStyle(filter) {
@@ -128,29 +137,53 @@ async function startCaptureSequence() {
     capturedPhotos = [];
     startCaptureBtn.disabled = true;
     
-    for(let i = 1; i <= 4; i++) {
-        await countdown(3);
+    // Show "Ready!"
+    await showCountdownMessage('Ready!', 1500);
+    
+    // Count 1, 2, 3
+    for(let i = 1; i <= 3; i++) {
+        await showCountdownMessage(i, 1000);
+    }
+    
+    // Show "Smile!" and take the photo
+    await showCountdownMessage('Smile!', 500);
+    await capturePhoto(1);
+
+    // Wait between shots
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // For remaining 3 photos
+    for(let i = 2; i <= 4; i++) {
+        // Count 1, 2, 3
+        for(let j = 1; j <= 3; j++) {
+            await showCountdownMessage(j, 1000);
+        }
+        
+        // Show "Smile!" and take the photo
+        await showCountdownMessage('Smile!', 500);
         await capturePhoto(i);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        if (i < 4) {
+            await new Promise(resolve => setTimeout(resolve, 1000));
+        }
     }
 
     document.getElementById('finalButtons').classList.remove('hidden');
+    startCaptureBtn.disabled = false;
 }
 
-function countdown(seconds) {
+function showCountdownMessage(message, duration) {
     return new Promise(resolve => {
         const countdownEl = document.getElementById('countdown');
         countdownEl.style.display = 'flex';
+        countdownEl.textContent = message;
+        countdownEl.setAttribute('data-message', message);
         
-        const timer = setInterval(() => {
-            countdownEl.textContent = seconds;
-            if (seconds <= 0) {
-                clearInterval(timer);
-                countdownEl.style.display = 'none';
-                resolve();
-            }
-            seconds--;
-        }, 1000);
+        setTimeout(() => {
+            countdownEl.style.display = 'none';
+            countdownEl.removeAttribute('data-message');
+            resolve();
+        }, duration);
     });
 }
 

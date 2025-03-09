@@ -63,10 +63,8 @@ body {
     max-width: 1000px;
     margin: 7rem auto 2rem;
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(10px);
     border-radius: 25px;
-    box-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
 }
 
 .about-header {
@@ -140,7 +138,6 @@ body {
 }
 
 .feature-card {
-    background: rgba(255, 255, 255, 0.8);
     padding: 1.8rem;
     border-radius: 18px;
     text-align: center;
@@ -208,7 +205,6 @@ body {
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    background: rgba(255, 255, 255, 0.8);
     padding: 1.2rem;
     border-radius: 15px;
     transition: all 0.3s ease;
@@ -250,7 +246,6 @@ body {
 }
 
 .tips-list li {
-    background: rgba(255, 255, 255, 0.8);
     padding: 1.2rem 1.5rem;
     border-radius: 15px;
     color: #FF1493;
@@ -281,25 +276,103 @@ body {
     flex-shrink: 0;
 }
 
-@media (max-width: 768px) {
-    .about-container {
-        margin: 6rem 1rem 2rem;
-        padding: 1.5rem;
-    }
+/* Common button styles */
+.primary-btn,
+.secondary-btn {
+    padding: 0.9rem 1.5rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
 
-    .about-header h1 {
-        font-size: 2.2rem;
-    }
+.primary-btn {
+    background: linear-gradient(45deg, #FF69B4, #FF1493);
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
 
-    .feature-grid,
-    .steps-container,
-    .tips-list {
-        grid-template-columns: 1fr;
-    }
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+}
 
-    .about-content {
-        gap: 3rem;
-    }
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid #FF69B4;
+    color: #FF69B4;
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Action buttons in capture page */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.action-buttons .primary-btn,
+.action-buttons .secondary-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 1.1rem;
+}
+
+.action-buttons.hidden {
+    display: none;
+}
+
+/* Disabled button states */
+.primary-btn:disabled,
+.secondary-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+    background: #ccc;
+    border-color: #ccc;
+}
+
+/* Filter buttons */
+.filter-btn {
+    padding: 0.75rem;
+    border: 2px solid rgba(255, 182, 193, 0.6);
+    border-radius: 12px;
+    background: transparent;
+    color: #FF69B4;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+}
+
+.filter-btn:hover {
+    background: rgba(255, 105, 180, 0.1);
+    border-color: #FF69B4;
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: linear-gradient(45deg, rgba(255, 105, 180, 0.9), rgba(255, 20, 147, 0.9));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
 }
 
 /* Landing page styles */
@@ -446,7 +519,6 @@ body {
     margin-left: auto;
     margin-right: auto;
     border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(255, 105, 180, 0.1);
 }
 
 .filters-panel, .preview-panel {
@@ -468,28 +540,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-}
-
-.filter-btn {
-    padding: 0.75rem;
-    border: 2px solid #FFB6C1;
-    border-radius: 12px;
-    background: #FFE5EC;
-    color: #FF69B4;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.filter-btn:hover {
-    background: #FF69B4;
-    color: white;
-    border-color: #FF69B4;
-    transform: translateY(-2px);
 }
 
 .camera-section {
@@ -528,12 +578,67 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 8rem;
+    font-size: 6rem;
     color: white;
     text-shadow: 0 0 20px rgba(255, 105, 180, 0.8);
     display: none;
     z-index: 10;
     font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    70% {
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+.countdown-overlay[data-message="Ready!"],
+.countdown-overlay[data-message="Smile!"] {
+    font-size: 5rem;
+    color: #FF69B4;
+    text-shadow: 2px 2px 0 white,
+                -2px -2px 0 white,
+                2px -2px 0 white,
+                -2px 2px 0 white;
+}
+
+.countdown-overlay[data-message="1"],
+.countdown-overlay[data-message="2"],
+.countdown-overlay[data-message="3"] {
+    font-size: 7rem;
+    background: linear-gradient(45deg, #FF69B4, #FF1493);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+}
+
+@media (max-width: 768px) {
+    .countdown-overlay {
+        font-size: 4rem;
+    }
+    
+    .countdown-overlay[data-message="Ready!"],
+    .countdown-overlay[data-message="Smile!"] {
+        font-size: 3.5rem;
+    }
+    
+    .countdown-overlay[data-message="1"],
+    .countdown-overlay[data-message="2"],
+    .countdown-overlay[data-message="3"] {
+        font-size: 5rem;
+    }
 }
 
 .preview-panel {
@@ -578,68 +683,55 @@ body {
 .action-buttons .secondary-btn {
     width: 100%;
     justify-content: center;
-    padding: 0.9rem;
+    padding: 1rem;
     font-size: 1.1rem;
-}
-
-.action-buttons .primary-btn {
-    margin-bottom: 0.5rem;
-}
-
-.action-buttons .secondary-btn {
-    background: transparent;
-    border: 2px solid #FF69B4;
-    color: #FF69B4;
-}
-
-.action-buttons .secondary-btn:hover {
-    background: rgba(255, 105, 180, 0.1);
 }
 
 .action-buttons.hidden {
     display: none;
 }
 
-.primary-btn {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 25px;
-    background: linear-gradient(45deg, #FF69B4, #FF1493);
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+/* Responsive styles for capture page */
+@media (max-width: 1024px) {
+    .capture-container {
+        grid-template-columns: 140px minmax(auto, 550px) 140px;
+        padding: 0.25rem;
+        max-width: 900px;
+    }
+
+    .camera-container {
+        max-width: 550px;
+    }
 }
 
-.secondary-btn {
-    padding: 0.75rem 1.5rem;
-    border: 2px solid #FF69B4;
-    border-radius: 25px;
-    background: transparent;
-    color: #FF69B4;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+@media (max-width: 768px) {
+    .capture-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto;
+        height: auto;
+        padding: 1rem;
+    }
 
-.primary-btn:hover, .secondary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.2);
-}
+    .filters-panel, .preview-panel {
+        padding: 1rem;
+    }
 
-.primary-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    .filter-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .camera-container {
+        max-width: 100%;
+    }
+
+    .preview-panel {
+        width: 100%;
+    }
+
+    .photo-slot {
+        height: 80px;
+    }
 }
 
 /* Camera permission overlay */
@@ -689,48 +781,5 @@ body {
     }
     60% {
         transform: translateY(-10px);
-    }
-}
-
-/* Responsive styles for capture page */
-@media (max-width: 1024px) {
-    .capture-container {
-        grid-template-columns: 140px minmax(auto, 550px) 140px;
-        padding: 0.25rem;
-        max-width: 900px;
-    }
-
-    .camera-container {
-        max-width: 550px;
-    }
-}
-
-@media (max-width: 768px) {
-    .capture-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto 1fr auto;
-        height: auto;
-        padding: 1rem;
-    }
-
-    .filters-panel, .preview-panel {
-        padding: 1rem;
-    }
-
-    .filter-options {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .camera-container {
-        max-width: 100%;
-    }
-
-    .preview-panel {
-        width: 100%;
-    }
-
-    .photo-slot {
-        height: 80px;
     }
 }
